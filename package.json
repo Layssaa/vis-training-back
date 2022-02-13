@@ -1,0 +1,28 @@
+{
+  "name": "vis-training-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Layssaa/vis-training-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Layssaa/vis-training-back/issues"
+  },
+  "homepage": "https://github.com/Layssaa/vis-training-back#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
