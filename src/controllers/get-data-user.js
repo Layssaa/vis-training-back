@@ -3,3 +3,4 @@ export function getData(req,res){
 }
 
 module.exports = { getData }
+

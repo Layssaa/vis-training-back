@@ -3,3 +3,4 @@ export function updateDataUser(req, res){
 }
 
 module.exports = { updateDataUser }
+
