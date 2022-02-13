@@ -1,4 +1,4 @@
-export function register(req, res){
+function register(req, res){
     console.log("USER REGISTERED!");
 };
 
