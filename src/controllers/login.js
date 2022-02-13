@@ -1,3 +1,5 @@
-export function login(req, res){
-    console.log("DO LOGIN");
-};
+export function login(req, res) {
+  console.log("DO LOGIN");
+}
+
+module.exports = { login };
