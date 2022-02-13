@@ -1,4 +1,4 @@
-export function getData(req,res){
+function getData(req,res){
     console.log("GET DATA");
 }
 

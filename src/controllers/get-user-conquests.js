@@ -1,4 +1,4 @@
-export function getConquests(req, res){
+function getConquests(req, res){
     console.log("GET CONQUESTS");
 }
 
