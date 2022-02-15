@@ -1,5 +1,5 @@
-function register(req, res){
+function registerController(req, res){
     console.log("USER REGISTERED!");
 };
 
-module.exports = { register }
+module.exports = { registerController }

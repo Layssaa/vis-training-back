@@ -1,5 +1,5 @@
-function getRouters(req,res){
+function getRoutersController(req,res){
     console.log("GET ROUTERS");
 }
 
-module.exports = { getRouters }
+module.exports = { getRoutersController }

@@ -1,6 +1,6 @@
-function updateDataUser(req, res){
+function updateDataUserController(req, res){
     console.log("UPDATE DATA");
 }
 
-module.exports = { updateDataUser }
+module.exports = { updateDataUserController }
 

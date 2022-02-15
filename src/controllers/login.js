@@ -1,5 +1,5 @@
-function login(req, res) {
+function loginController(req, res) {
   console.log("DO LOGIN");
 }
 
-module.exports = { login };
+module.exports = { loginController };

@@ -1,5 +1,5 @@
-function getConquests(req, res){
+function getConquestsController(req, res){
     console.log("GET CONQUESTS");
 }
 
-module.exports = { getConquests }
+module.exports = { getConquestsController }
