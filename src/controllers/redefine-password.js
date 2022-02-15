@@ -1,5 +1,5 @@
-function redefinePassword(req, res) {
+function redefinePasswordController(req, res) {
   console.log("PASSWORD REDEFINED");
 }
 
-module.exports = { redefinePassword };
+module.exports = { redefinePasswordController };
