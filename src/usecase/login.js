@@ -29,3 +29,7 @@ async function loginUsecase(_user) {
 }
 
 module.exports = { loginUsecase };
+
+//Falta fazer
+// - crypto
+// - jwt
