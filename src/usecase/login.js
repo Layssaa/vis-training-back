@@ -1,24 +1,25 @@
-const { findMongoose } = require("../repositories/find-mongoose");
+const { findMongoDB } = require("../repositories/find-mongoose");
 const { getDataRedis } = require("../repositories/get-redis");
 const { setDataRedis } = require("../repositories/set-redis");
+const { AuthenticateUser } = require("../utils/auth");
 
 async function loginUsecase(_user) {
   const { email, password } = _user;
   let dataUser;
 
   try {
-    const ifUserLogged = await getDataRedis(`use-${_user.email}`);
+    const ifUserLogged = await getDataRedis(`use-${email}`);
 
     if (!ifUserLogged) {
-      dataUser = await findMongoose({ email: email });
+      dataUser = await findMongoDB({ email: email });
 
-      if (!dataUser) return (dataUser = "User not found");
+      if (dataUser.length == 0) throw new Error("User not found");
 
-      if (dataUser[0].password != password) {
+      if (!(await AuthenticateUser(password, email, dataUser[0].password))) {
         throw new Error("Incorrect data");
       }
 
-      await setDataRedis(`use-${_user.email}`, _user);
+      await setDataRedis(`use-${email}`, _user);
     }
 
     return { data: ifUserLogged || dataUser[0] };
@@ -31,5 +32,4 @@ async function loginUsecase(_user) {
 module.exports = { loginUsecase };
 
 //Falta fazer
-// - crypto
 // - jwt
