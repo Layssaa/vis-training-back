@@ -1,19 +1,19 @@
 ### VIS TRAINING BACK-END
 
 ## INSTALL
-        `yarn dev`
+        yarn dev
 
 ## START DEV
-        `yarn dev`
+        yarn dev
 
 ## START PROD
-        `yarn start`
+        yarn start
     
 ## ENV VARS
-        `cp .env.exemplo .env`
+        cp .env.exemplo .env
 
 ## STRUCTURE
-        `
+        
             /src
                 - /config // API settings 
                 - /constants // constantes
@@ -27,4 +27,4 @@
                 - /utils // functions used for code logic
                 - app.js // run file
                 - server.js // API base file
-                `
+                
