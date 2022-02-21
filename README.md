@@ -1,18 +1,18 @@
-### VIS TRAINING BACK-END
+## VIS TRAINING BACK-END
 
-## INSTALL
+### INSTALL
         yarn dev
 
-## START DEV
+### START DEV
         yarn dev
 
-## START PROD
+### START PROD
         yarn start
     
-## ENV VARS
+### ENV VARS
         cp .env.exemplo .env
 
-## STRUCTURE
+### STRUCTURE
         
             /src
                 - /config // API settings 
