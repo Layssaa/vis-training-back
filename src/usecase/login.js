@@ -3,6 +3,9 @@ const { getDataRedis } = require("../repositories/get-redis");
 const { setDataRedis } = require("../repositories/set-redis");
 const { AuthenticateUser } = require("../utils/auth");
 
+//Falta fazer
+// - jwt
+
 async function loginUsecase(_user) {
   const { email, password } = _user;
   let dataUser;
@@ -30,6 +33,3 @@ async function loginUsecase(_user) {
 }
 
 module.exports = { loginUsecase };
-
-//Falta fazer
-// - jwt
