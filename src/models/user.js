@@ -1,12 +1,13 @@
-const { Mongoose } = require("../database/_connection");
-const Schema = Mongoose.Schema;
+const mongoose = require("../database/_connection");
+const Schema = mongoose.Schema;
 
-const User = new Schema({
+const UserModel = new Schema({
   name: {
     type: String,
     require: true,
   },
   email: {
+    type: String,
     required: true,
   },
   password: {
@@ -16,6 +17,6 @@ const User = new Schema({
   // ... {}
 });
 
-const User = mongoose.model("User", User);
+const User = mongoose.model("User", UserModel);
 
 module.exports = { User };
