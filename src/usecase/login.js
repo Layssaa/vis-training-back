@@ -2,6 +2,9 @@ const { findUserMongoDB } = require("../repositories/mongo-connect");
 const { getDataRedis, setDataRedis } = require("../database/redis");
 const { AuthenticateUser } = require("../utils/auth");
 
+//Falta fazer
+// - jwt
+
 async function loginUsecase(_user) {
   const { email, password } = _user;
   let dataUser;
@@ -30,5 +33,3 @@ async function loginUsecase(_user) {
 
 module.exports = { loginUsecase };
 
-//Falta fazer
-// - jwt
