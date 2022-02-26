@@ -1,7 +1,7 @@
 const app = require("./Server");
-const PORT = process.env.PORT || 3030;
+const { PORT } = require("./config/index");
 
-app.listen(PORT, function (err) {
-    if (err) console.log(err);
-    console.log("Server listening on PORT", PORT);
+app.listen(PORT || 3030, function (err) {
+  if (err) console.log(err);
+  console.log("Server listening on PORT", PORT || 3030);
 });
