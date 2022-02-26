@@ -1,4 +1,4 @@
-const { redisClient } = require("../database/_redis");
+const { redisClient } = require("../database/redis");
 
 module.exports = {
   async getDataRedis(_search) {

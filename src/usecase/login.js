@@ -1,5 +1,5 @@
 const { findUserMongoDB } = require("../repositories/mongo-connect");
-const { getDataRedis, setDataRedis } = require("../database/redis");
+const { getDataRedis, setDataRedis } = require("../repositories/redis-connect");
 const { AuthenticateUser } = require("../utils/auth");
 
 //Falta fazer
@@ -32,4 +32,3 @@ async function loginUsecase(_user) {
 }
 
 module.exports = { loginUsecase };
-
