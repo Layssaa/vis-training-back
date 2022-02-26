@@ -1,7 +1,9 @@
-const { findMongoDB } = require("../repositories/find-mongoose");
-const { getDataRedis } = require("../repositories/get-redis");
-const { setDataRedis } = require("../repositories/set-redis");
+const { findUserMongoDB } = require("../repositories/mongo-connect");
+const { getDataRedis, setDataRedis } = require("../repositories/redis-connect");
 const { AuthenticateUser } = require("../utils/auth");
+
+//Falta fazer
+// - jwt
 
 async function loginUsecase(_user) {
   const { email, password } = _user;
@@ -11,7 +13,7 @@ async function loginUsecase(_user) {
     const ifUserLogged = await getDataRedis(`use-${email}`);
 
     if (!ifUserLogged) {
-      dataUser = await findMongoDB({ email: email });
+      dataUser = await findUserMongoDB({ email: email });
 
       if (dataUser.length == 0) throw new Error("User not found");
 
@@ -30,6 +32,3 @@ async function loginUsecase(_user) {
 }
 
 module.exports = { loginUsecase };
-
-//Falta fazer
-// - jwt
