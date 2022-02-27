@@ -7,4 +7,7 @@ module.exports = {
     }
     return await User.find({ ..._obj });
   },
+  async insertUserMongoDB(_obj) {
+    return await User.create(_obj);
+  },
 };
