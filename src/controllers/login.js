@@ -8,7 +8,7 @@ async function loginController(req, res) {
   } catch (error) {
     console.log(error);
 
-    res.status(200).send({ status: 400, msg: error });
+    res.status(200).send({ status: 400, msg: error.message });
   }
 }
 

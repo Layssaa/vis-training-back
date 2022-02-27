@@ -28,7 +28,6 @@ const UserModel = new Schema({
   password: {
     type: String,
     required: true,
-    select: false,
   },
   avatar_url: {
     type: String,
