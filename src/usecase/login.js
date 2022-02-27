@@ -12,7 +12,7 @@ async function loginUsecase(_user) {
   try {
     const ifUserLogged = await getDataRedis(`use-${email}`);
 
-    if (!ifUserLogged) { 
+    if (!ifUserLogged) {
       dataUser = await findUserMongoDB({ email: email });
 
       if (dataUser.length == 0 || !dataUser) throw new Error("User not found");
@@ -21,7 +21,7 @@ async function loginUsecase(_user) {
         throw new Error("Incorrect data");
       }
 
-      await setDataRedis(`use-${email}`, dataUser[0].id);
+      await setDataRedis(`use-${email}`, { id: dataUser[0].id });
     }
 
     return { data: ifUserLogged || dataUser[0] };
