@@ -2,26 +2,23 @@ const {
   findUserMongoDB,
   insertUserMongoDB,
 } = require("../repositories/mongo-connect");
+const { setDataRedis } = require("../repositories/redis-connect");
+const { EncryptData } = require("../utils/auth");
 
-async function registerUsecase({ email, password, repeat_password }) {
-  console.log("USER CASE REGISTER!");
-  console.log("----- DATA USER -----");
-  console.log(email);
-  console.log(password);
-  console.log(repeat_password);
-
+async function registerUsecase({ name, email, password, repeat_password }) {
   try {
     if (password !== repeat_password)
       throw new Error("The passwords are different.");
 
-    const rows = await findUserMongoDB({ email: email });
+    const result = await findUserMongoDB({ email: email });
 
-    console.log("---- RESULT -----");
-    console.log(rows);
+    if (result.length !== 0) throw new Error("User already exists.");
 
-    if (rows) return Error("User already exists.");
+    const { hash } = await EncryptData(password, email);
 
-    // await insertUserMongoDB({ email, password });
+    const insertData = await insertUserMongoDB({ name, email, password: hash });
+
+    await setDataRedis(`use-${email}`, insertData.id);
 
     return { data: "User registered successfully!" };
   } catch (error) {
