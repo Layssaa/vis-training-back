@@ -51,9 +51,15 @@ const UserModel = new Schema({
       },
     },
   ],
-  createAt: {
+  create_At: {
     type: Date,
     default: Date.now(),
+  },
+  updated_At: {
+    type: Date,
+  },
+  deleted_At: {
+    type: Date,
   },
 });
 
