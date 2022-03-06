@@ -1,23 +1,28 @@
-import nodemailer from "nodemailer";
-import hbs from "nomdemailer-express-handlebars";
-import path from "path";
+const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
+const path = require("path");
 
-import { MAILER_HOST, MAILER_PORT, MAILER_USER, MAILER_PORT } from "./index";
+const { MAILER_HOST, MAILER_PORT, MAILER_USER, MAILER_PASS } = require("./index");
 
-export const transport = nodemailer.createTransport({
+const transport = nodemailer.createTransport({
   host: MAILER_HOST,
   port: MAILER_PORT,
   auth: {
     user: MAILER_USER,
-    pass: MAILER_PORT,
+    pass: MAILER_PASS,
   },
 });
 
 transport.use(
   "compile",
   hbs({
-    viewEngine: "handlebars",
-    viewPath: path.resolve("./src/views"),
+    viewEngine: {
+      defaultLayout: undefined,
+      partialsDir: path.resolve("./src/views/"),
+    },
+    viewPath: path.resolve("./src/views/"),
     extName: ".html",
   })
 );
+
+module.exports = transport;
