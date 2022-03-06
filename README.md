@@ -11,6 +11,20 @@
     
 ### ENV VARS
         cp .env.exemplo .env
+        
+### SET ENV VARS
+Uso do mailtrap para desenvolvimento/teste do envio dos emails para recuperação de senha
+- Crie uma conta no [https://mailtrap.io/](https://mailtrap.io/)
+- Crie uma caixa de entrada
+- Ao clicar na caixa, vá em **Integrations**
+- Selecione **Nodemailer**
+- Coloque os valores nos respectivos campos. 
+
+        MAILER_HOST=
+        MAILER_PORT=
+        MAILER_USER=
+        MAILER_PASS=
+        
 
 ### STRUCTURE
         
