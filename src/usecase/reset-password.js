@@ -4,15 +4,14 @@ const { EncryptData, AuthenticateUser } = require("../utils/auth");
 const { authenticJWT } = require("../utils/auth-jwt");
 
 async function resetPasswordUseCase({
-  email,
   token,
   redefined_password,
   repeat_password,
 }) {
   try {
     // --------------- GET SESSION ON REDIS -----------------
-    if (!(await getDataRedis(`session:reset-password:${token}`)))
-      throw new Error("Expired token");
+    const { id } = await getDataRedis(`session:reset-password:${token}`);
+    if (!id) throw new Error("Expired token");
 
     if (repeat_password !== redefined_password)
       throw new Error("The passwords are different");
@@ -23,15 +22,15 @@ async function resetPasswordUseCase({
     if (!auth) throw new Error("Invalid token.");
 
     // --------------- GET USER ON MONGO -----------------
-    const user = await findUserMongoDB({ email });
+    const user = await findUserMongoDB({ id });
 
     if (!user) throw new Error("User not found");
 
     // --------------- ENCRYPT NEW PASSWORD -----------------
-    const { hash } = await EncryptData(redefined_password, email);
+    const { hash } = await EncryptData(redefined_password, user.email);
 
     // --------------- VERIFY IF THE NEW PASSWORD IS THE SAME AS THE OLD -----------------
-    if (await AuthenticateUser(redefined_password, email, user.password))
+    if (await AuthenticateUser(redefined_password, user.email, user.password))
       throw new Error("Try a different password than the previous one.");
 
     // ----------------- INSERT NEW DATA -----------------

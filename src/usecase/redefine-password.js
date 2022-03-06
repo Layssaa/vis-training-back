@@ -10,8 +10,10 @@ async function redefinePasswordUsecase(email) {
     if (!ifUserExist) throw new Error("User not found");
 
     const { token } = await createToken(email);
-    
-    await setSessionRedis(`session:reset-password:${token}`, ifUserExist.id);
+
+    await setSessionRedis(`session:reset-password:${token}`, {
+      id: ifUserExist.id,
+    });
 
     mailer.sendMail(
       {
@@ -25,7 +27,7 @@ async function redefinePasswordUsecase(email) {
         if (err) throw new Error(err.message);
       }
     );
-    
+
     return { data: "Recovery email sent!" };
   } catch (error) {
     console.log(error);

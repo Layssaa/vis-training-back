@@ -1,11 +1,10 @@
 const { resetPasswordUseCase } = require("../usecase/reset-password");
 
 async function resetPassword(req, res) {
-  const { email, token, redefined_password, repeat_password } = req.body;
+  const { token, redefined_password, repeat_password } = req.body;
 
   try {
     const { data, error } = await resetPasswordUseCase({
-      email,
       token,
       redefined_password,
       repeat_password,
