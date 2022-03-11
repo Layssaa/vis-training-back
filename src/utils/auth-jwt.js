@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const { SECRET } = require("../config");
+import jwt from "jsonwebtoken";
+import { SECRET } from "../config/index.js";
 
 const createToken = async (_token) => {
   const token = await jwt.sign({ _token }, SECRET, {
@@ -16,12 +16,11 @@ async function authenticJWT(_token) {
     jwt.verify(_token, SECRET, (err) => {
       if (err) throw new Error(err);
     });
-    
+
     return { auth: true };
   } catch (error) {
-
     return { auth: false };
   }
 }
 
-module.exports = { createToken, authenticJWT };
+export { createToken, authenticJWT };

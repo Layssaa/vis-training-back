@@ -1,8 +1,7 @@
-const { registerController } = require("../controllers/register-user");
-const { verifyFields } = require("../middlewares/verify-fields");
-const { router } = require("./router");
+import { registerController } from "../controllers/register-user.js";
+import { verifyFields } from "../middlewares/verify-fields.js";
+import { router } from "./router.js";
 
 router.post("/register", verifyFields, registerController);
 
-
-module.exports = { router };
+export { router };

@@ -1,4 +1,4 @@
-const { resetPasswordUseCase } = require("../usecase/reset-password");
+import { resetPasswordUseCase } from "../usecase/reset-password.js";
 
 async function resetPassword(req, res) {
   const { token, redefined_password, repeat_password } = req.body;
@@ -19,4 +19,4 @@ async function resetPassword(req, res) {
   }
 }
 
-module.exports = { resetPassword };
+export { resetPassword };

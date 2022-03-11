@@ -1,6 +1,6 @@
-const { getRoutersController } = require("../controllers/get-routers");
-const { router } = require("./router");
+import { getRoutersController } from "../controllers/get-routers.js";
+import { router } from "./router.js";
 
 router.get("/routers", getRoutersController);
 
-module.exports = { router };
+export { router };

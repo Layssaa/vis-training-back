@@ -1,4 +1,4 @@
-const Redis = require("ioredis");
+import Redis from "ioredis";
 
 const redisClient = new Redis();
 
@@ -6,6 +6,4 @@ redisClient.on("error", (err) => {
   console.log(err);
 });
 
-module.exports = {
-  redisClient,
-};
+export { redisClient };

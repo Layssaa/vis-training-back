@@ -1,7 +1,7 @@
-const { loginController } = require("../controllers/login");
-const { verifyFields } = require("../middlewares/verify-fields");
-const { router } = require("./router");
+import { loginController } from "../controllers/login.js";
+import { verifyFields } from "../middlewares/verify-fields.js";
+import { router } from "./router.js";
 
 router.post("/login", verifyFields, loginController);
 
-module.exports = { router };
+export { router };

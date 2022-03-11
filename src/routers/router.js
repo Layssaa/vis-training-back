@@ -1,3 +1,5 @@
-const router = require("express").Router();
+// import { Router as router } from "express";
+import { Router } from "express";
+const router = Router();
 
-module.exports = { router };
+export { router };

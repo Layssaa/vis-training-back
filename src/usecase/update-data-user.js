@@ -1,6 +1,6 @@
-function updateDataUserUsecase(){
+async function updateDataUserUsecase(){
     console.log("UPDATE DATA");
 }
 
-module.exports = { updateDataUserUsecase }
+export { updateDataUserUsecase }
 

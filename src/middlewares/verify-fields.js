@@ -11,4 +11,4 @@ async function verifyFields(req, res, next) {
   next();
 }
 
-module.exports = { verifyFields };
+export { verifyFields };

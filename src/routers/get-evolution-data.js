@@ -1,7 +1,6 @@
-const { getEvolutionController } = require("../controllers/get-evolution-data");
-const { router } = require("./router");
+import { getEvolutionController } from "../controllers/get-evolution-data.js";
+import { router } from "./router.js";
 
 router.get("/evolution", getEvolutionController);
 
-
-module.exports = { router };
+export { router };

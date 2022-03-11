@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const { MONGO_HOST } = require("../config/index");
+import mongoose from "mongoose";
+import { MONGO_HOST } from "../config/index.js";
 
 mongoose.connect(MONGO_HOST);
 
-module.exports = mongoose;
+export { mongoose };

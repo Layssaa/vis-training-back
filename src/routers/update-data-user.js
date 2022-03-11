@@ -1,6 +1,6 @@
-const { updateDataUserController } = require("../controllers/update-data-user");
-const { router } = require("./router");
+import { updateDataUserController } from "../controllers/update-data-user.js";
+import { router } from "./router.js";
 
 router.put("/update", updateDataUserController);
 
-module.exports = { router };
+export { router };

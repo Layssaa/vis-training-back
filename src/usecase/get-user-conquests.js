@@ -1,5 +1,5 @@
-function getConquestsUsecase(){
+async function getConquestsUsecase(){
     console.log("GET CONQUESTS");
 }
 
-module.exports = { getConquestsUsecase }
+export { getConquestsUsecase }

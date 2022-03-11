@@ -1,6 +1,6 @@
-const { getTrainingsController } = require("../controllers/get-trainings");
-const { router } = require("./router");
+import { getTrainingsController } from "../controllers/get-trainings.js";
+import { router } from "./router.js";
 
 router.get("/trainings", getTrainingsController);
 
-module.exports = { router };
+export { router };

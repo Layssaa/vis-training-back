@@ -3,4 +3,4 @@ async function getDataController(req, res) {
   res.send("data");
 }
 
-module.exports = { getDataController };
+export { getDataController };

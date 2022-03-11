@@ -1,4 +1,4 @@
-const { registerUsecase } = require("../usecase/register-user");
+import { registerUsecase } from "../usecase/register-user.js";
 
 async function registerController(req, res) {
   const { name, email, password, repeat_password } = req.body;
@@ -12,7 +12,7 @@ async function registerController(req, res) {
     });
 
     if (error) throw new Error(error);
-    
+
     res.status(200).send({ data });
   } catch (error) {
     console.log(error.message);
@@ -20,4 +20,4 @@ async function registerController(req, res) {
   }
 }
 
-module.exports = { registerController };
+export { registerController };

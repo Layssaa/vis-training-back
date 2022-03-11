@@ -1,10 +1,9 @@
-const { findUserMongoDB } = require("../repositories/mongo-connect");
-const { getDataRedis, setDataRedis } = require("../repositories/redis-connect");
-const { AuthenticateUser } = require("../utils/auth");
+import { findUserMongoDB } from "../repositories/mongo-connect.js";
+import { getDataRedis, setDataRedis } from "../repositories/redis-connect.js";
+import { AuthenticateUser } from "../utils/auth.js";
 
 //Falta fazer
 // - jwt
-
 async function loginUsecase(_user) {
   const { email, password } = _user;
   let dataUser;
@@ -31,4 +30,4 @@ async function loginUsecase(_user) {
   }
 }
 
-module.exports = { loginUsecase };
+export { loginUsecase };

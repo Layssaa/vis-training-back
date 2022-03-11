@@ -1,6 +1,6 @@
-const { getConquestsController } = require("../controllers/get-user-conquests");
-const { router } = require("./router");
+import { getConquestsController } from "../controllers/get-user-conquests.js";
+import { router } from "./router.js";
 
 router.get("/conquests", getConquestsController);
 
-module.exports = { router };
+export { router };

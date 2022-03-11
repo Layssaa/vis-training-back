@@ -1,5 +1,5 @@
 // ---- FEEDBACKS TO USER ----
-module.exports = {
+export default {
   user_not_found: "User not found",
   incorrect_data: "Incorrect data",
   complete_fields: "All information must be completed",
@@ -8,6 +8,6 @@ module.exports = {
   user_registered_with_sucess: "User registered successfully!",
   invalid_token: "Invalid token.",
   not_token_provide: "No token provided.",
-  expired_token:"expired token",
-  try_a_different_password: "Try a different password than the previous one."
+  expired_token: "expired token",
+  try_a_different_password: "Try a different password than the previous one.",
 };

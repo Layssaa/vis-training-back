@@ -1,5 +1,5 @@
-function getTrainingsUsecase(){
+async function getTrainingsUsecase(){
     console.log("GET TRAINING");
 }
 
-module.exports = { getTrainingsUsecase }
+export { getTrainingsUsecase }

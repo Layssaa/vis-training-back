@@ -1,8 +1,8 @@
-const nodemailer = require("nodemailer");
-const hbs = require("nodemailer-express-handlebars");
-const path = require("path");
+import nodemailer from "nodemailer";
+import hbs from "nodemailer-express-handlebars";
+import path from "path";
 
-const { MAILER_HOST, MAILER_PORT, MAILER_USER, MAILER_PASS } = require("./index");
+import { MAILER_HOST, MAILER_PORT, MAILER_USER, MAILER_PASS } from "./index.js";
 
 const transport = nodemailer.createTransport({
   host: MAILER_HOST,
@@ -25,4 +25,4 @@ transport.use(
   })
 );
 
-module.exports = transport;
+export default transport;
