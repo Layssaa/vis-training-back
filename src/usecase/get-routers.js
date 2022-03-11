@@ -1,5 +1,5 @@
-function getRoutersUsecase(){
+async function getRoutersUsecase(){
     console.log("GET ROUTERS");
 }
 
-module.exports = { getRoutersUsecase }
+export { getRoutersUsecase }

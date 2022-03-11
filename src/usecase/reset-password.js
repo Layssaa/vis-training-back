@@ -1,7 +1,7 @@
-const { findUserMongoDB } = require("../repositories/mongo-connect");
-const { getDataRedis } = require("../repositories/redis-connect");
-const { EncryptData, AuthenticateUser } = require("../utils/auth");
-const { authenticJWT } = require("../utils/auth-jwt");
+import { findUserMongoDB } from "../repositories/mongo-connect.js";
+import { getDataRedis } from "../repositories/redis-connect.js";
+import { EncryptData, AuthenticateUser } from "../utils/auth.js";
+import { authenticJWT } from "../utils/auth-jwt.js";
 
 async function resetPasswordUseCase({
   token,
@@ -45,4 +45,4 @@ async function resetPasswordUseCase({
   }
 }
 
-module.exports = { resetPasswordUseCase };
+export { resetPasswordUseCase };

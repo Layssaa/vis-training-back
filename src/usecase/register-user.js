@@ -1,9 +1,9 @@
-const {
+import {
   findUserMongoDB,
   insertUserMongoDB,
-} = require("../repositories/mongo-connect");
-const { setDataRedis } = require("../repositories/redis-connect");
-const { EncryptData } = require("../utils/auth");
+} from "../repositories/mongo-connect.js";
+import { setDataRedis } from "../repositories/redis-connect.js";
+import { EncryptData } from "../utils/auth.js";
 
 async function registerUsecase({ name, email, password, repeat_password }) {
   try {
@@ -12,7 +12,7 @@ async function registerUsecase({ name, email, password, repeat_password }) {
 
     const result = await findUserMongoDB({ email: email });
 
-    if (result.length !== 0) throw new Error("User already exists.");
+    if (result) throw new Error("User already exists.");
 
     const { hash } = await EncryptData(password, email);
 
@@ -28,4 +28,4 @@ async function registerUsecase({ name, email, password, repeat_password }) {
   }
 }
 
-module.exports = { registerUsecase };
+export { registerUsecase };

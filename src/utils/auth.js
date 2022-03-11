@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 const EncryptData = async (_token, _email) => {
   const saltRounds = 10;
@@ -23,7 +23,4 @@ const AuthenticateUser = async (_token, _email, _hash) => {
   return await bcrypt.compare(passwordVerify, _hash);
 };
 
-module.exports = {
-  EncryptData,
-  AuthenticateUser,
-};
+export { EncryptData, AuthenticateUser };

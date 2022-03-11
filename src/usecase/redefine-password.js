@@ -1,7 +1,7 @@
-const { findUserMongoDB } = require("../repositories/mongo-connect");
-const { setSessionRedis } = require("../repositories/redis-connect");
-const { createToken } = require("../utils/auth-jwt");
-const mailer = require("../config/mailer");
+import { findUserMongoDB } from "../repositories/mongo-connect.js";
+import { setSessionRedis } from "../repositories/redis-connect.js";
+import { createToken } from "../utils/auth-jwt.js";
+import mailer from "../config/mailer.js";
 
 async function redefinePasswordUsecase(email) {
   try {
@@ -36,4 +36,4 @@ async function redefinePasswordUsecase(email) {
   }
 }
 
-module.exports = { redefinePasswordUsecase };
+export { redefinePasswordUsecase };

@@ -1,4 +1,4 @@
-const { redefinePasswordUsecase } = require("../usecase/redefine-password");
+import { redefinePasswordUsecase } from "../usecase/redefine-password.js";
 
 async function redefinePasswordController(req, res) {
   const { email } = req.body;
@@ -15,4 +15,4 @@ async function redefinePasswordController(req, res) {
   }
 }
 
-module.exports = { redefinePasswordController };
+export { redefinePasswordController };

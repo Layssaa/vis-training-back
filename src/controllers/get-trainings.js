@@ -1,5 +1,5 @@
-function getTrainingsController(req, res){
+async function getTrainingsController(req, res){
     console.log("GET TRAINING");
 }
 
-module.exports = { getTrainingsController }
+export { getTrainingsController }

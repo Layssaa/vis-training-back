@@ -1,5 +1,5 @@
-function getRoutersController(req,res){
-    console.log("GET ROUTERS");
+async function getRoutersController(req, res) {
+  console.log("GET ROUTERS");
 }
 
-module.exports = { getRoutersController }
+export { getRoutersController };

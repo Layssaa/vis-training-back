@@ -1,6 +1,5 @@
-const { mongoose } = require("../database/connection");
+import { mongoose } from "../database/connection.js";
 const Schema = mongoose.Schema;
-// const ObjectId = Schema.Types.ObjectId
 
 const categoriesModel = new Schema({
   records: [
@@ -65,4 +64,4 @@ const UserModel = new Schema({
 
 const User = mongoose.model("User", UserModel);
 
-module.exports = { User };
+export { User };

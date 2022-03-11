@@ -1,4 +1,4 @@
-const { loginUsecase } = require("../usecase/login");
+import { loginUsecase } from "../usecase/login.js";
 
 async function loginController(req, res) {
   try {
@@ -12,4 +12,4 @@ async function loginController(req, res) {
   }
 }
 
-module.exports = { loginController };
+export { loginController };

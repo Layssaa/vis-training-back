@@ -1,6 +1,6 @@
- function getEvolutionUsecase(){
+ async function getEvolutionUsecase(){
     console.log("GET EVOLUTION");
 }
 
-module.exports = { getEvolutionUsecase }
+export { getEvolutionUsecase }
 

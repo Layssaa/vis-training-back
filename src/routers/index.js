@@ -1,21 +1,21 @@
-const _getData = require("./get-data-user");
-const _getEvolution = require("./get-evolution-data");
-const _getRouters = require("./get-routers");
-const _getTraining = require("./get-trainings");
-const _login = require("./login");
-const _password = require("./password");
-const _registerUser = require("./register-user");
-const _updateData = require("./update-data-user");
-const _getConquests = require("./get-conquests");
+import { router as _getData } from "./get-data-user.js";
+import { router as _getEvolution } from "./get-evolution-data.js";
+import { router as _getRouters } from "./get-routers.js";
+import { router as _getTraining } from "./get-trainings.js";
+import { router as _login } from "./login.js";
+import { router as _password } from "./password.js";
+import { router as _registerUser } from "./register-user.js";
+import { router as _updateData } from "./update-data-user.js";
+import { router as _getConquests } from "./get-conquests.js";
 
-module.exports = {
-  _getData: _getData.router,
-  _getEvolution: _getEvolution.router,
-  _getRouters: _getRouters.router,
-  _getTraining: _getTraining.router,
-  _login: _login.router,
-  _password: _password.router,
-  _registerUser: _registerUser.router,
-  _updateData: _updateData.router,
-  _getConquests: _getConquests.router,
+export {
+  _getData,
+  _getEvolution,
+  _getRouters,
+  _getTraining,
+  _login,
+  _password,
+  _registerUser,
+  _updateData,
+  _getConquests,
 };

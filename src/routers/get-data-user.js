@@ -1,6 +1,6 @@
-const { getDataController } = require("../controllers/get-data-user");
-const { router } = require("./router");
+import { getDataController } from "../controllers/get-data-user.js";
+import { router } from "./router.js";
 
 router.get("/user", getDataController);
 
-module.exports = { router };
+export { router };
