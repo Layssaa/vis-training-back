@@ -1,6 +1,6 @@
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
 import { getDataRedis, setDataRedis } from "../repositories/redis-connect.js";
-import { AuthenticateUser } from "../utils/auth.js";
+import { authenticateUser } from "../utils/auth.js";
 
 //Falta fazer
 // - jwt
@@ -16,7 +16,7 @@ async function loginUsecase(_user) {
 
       if (dataUser.length == 0 || !dataUser) throw new Error("User not found");
 
-      if (!(await AuthenticateUser(password, email, dataUser[0].password))) {
+      if (!(await authenticateUser(password, email, dataUser[0].password))) {
         throw new Error("Incorrect data");
       }
 

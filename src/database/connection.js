@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { MONGO_HOST } from "../config/index.js";
+import { MONGO_URI } from "../config/index.js";
 
-mongoose.connect(MONGO_HOST);
+mongoose.connect(MONGO_URI);
 
 export { mongoose };

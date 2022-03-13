@@ -1,6 +1,6 @@
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
 import { getDataRedis } from "../repositories/redis-connect.js";
-import { EncryptData, AuthenticateUser } from "../utils/auth.js";
+import { encryptData, authenticateUser } from "../utils/auth.js";
 import { authenticJWT } from "../utils/auth-jwt.js";
 
 async function resetPasswordUseCase({
@@ -27,10 +27,10 @@ async function resetPasswordUseCase({
     if (!user) throw new Error("User not found");
 
     // --------------- ENCRYPT NEW PASSWORD -----------------
-    const { hash } = await EncryptData(redefined_password, user.email);
+    const { hash } = await encryptData(redefined_password, user.email);
 
     // --------------- VERIFY IF THE NEW PASSWORD IS THE SAME AS THE OLD -----------------
-    if (await AuthenticateUser(redefined_password, user.email, user.password))
+    if (await authenticateUser(redefined_password, user.email, user.password))
       throw new Error("Try a different password than the previous one.");
 
     // ----------------- INSERT NEW DATA -----------------

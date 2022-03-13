@@ -10,4 +10,4 @@ const responseStatus = {
   service_unavailable: 503,
 };
 
-export default { responseStatus };
+export { responseStatus };
