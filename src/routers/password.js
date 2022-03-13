@@ -1,9 +1,9 @@
 import { redefinePasswordController } from "../controllers/redefine-password.js";
 import { resetPassword } from "../controllers/reset-password.js";
-import { verifyFields } from "../middlewares/verify-fields.js";
+import { verifyUndefinedFields } from "../middlewares/verify-undefined-fields.js";
 import { router } from "./router.js";
 
-router.post("/forgot-password", verifyFields, redefinePasswordController);
-router.post("/password-reset", verifyFields, resetPassword);
+router.post("/forgot-password", verifyUndefinedFields, redefinePasswordController);
+router.post("/password-reset", verifyUndefinedFields, resetPassword);
 
 export { router };

@@ -12,7 +12,8 @@ async function registerUsecase({ name, email, password, repeat_password }) {
 
     const result = await findUserMongoDB({ email: email });
 
-    if (result) throw new Error("User already exists.");
+    if (result)
+      throw new Error("User already exists.");
 
     const { hash } = await EncryptData(password, email);
 
