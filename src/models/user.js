@@ -2,16 +2,12 @@ import { mongoose } from "../database/connection.js";
 const Schema = mongoose.Schema;
 
 const categoriesModel = new Schema({
-  records: [
-    {
-      id: mongoose.ObjectId,
-      name_route: String,
-      date: Date,
-      distance: Number,
-      time: Number,
-      elevation_gain: Number,
-    },
-  ],
+  id: mongoose.ObjectId,
+  name_route: String,
+  date: Date,
+  distance: Number,
+  time: Number,
+  elevation_gain: Number,
 });
 
 const UserModel = new Schema({
@@ -37,19 +33,17 @@ const UserModel = new Schema({
   token: {
     type: String,
   },
-  modalities: [
-    {
-      cycling: {
-        categoriesModel,
-      },
-      walking: {
-        categoriesModel,
-      },
-      running: {
-        categoriesModel,
-      },
+  modalities: {
+    cycling: {
+      records: [categoriesModel],
     },
-  ],
+    walking: {
+      records: [categoriesModel],
+    },
+    running: {
+      records: [categoriesModel],
+    },
+  },
   create_At: {
     type: Date,
     default: Date.now(),
