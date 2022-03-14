@@ -38,19 +38,17 @@ const UserModel = new Schema({
   token: {
     type: String,
   },
-  modalities: [
-    {
-      cycling: {
-        distanceAndTimeModalitiesModel,
-      },
-      walking: {
-        distanceAndTimeModalitiesModel,
-      },
-      running: {
-        distanceAndTimeModalitiesModel,
-      },
+  modalities: {
+    cycling: {
+      distanceAndTimeModalitiesModel,
     },
-  ],
+    walking: {
+      distanceAndTimeModalitiesModel,
+    },
+    running: {
+      distanceAndTimeModalitiesModel,
+    },
+  },
   create_At: {
     type: Date,
     default: Date.now(),
