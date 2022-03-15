@@ -1,7 +1,7 @@
 import { loginController } from "../controllers/login.js";
-import { verifyFields } from "../middlewares/verify-fields.js";
+import { verifyUndefinedFields } from "../middlewares/verify-undefined-fields.js";
 import { router } from "./router.js";
 
-router.post("/login", verifyFields, loginController);
+router.post("/login", verifyUndefinedFields, loginController);
 
 export { router };

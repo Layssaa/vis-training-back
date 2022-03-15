@@ -3,7 +3,7 @@ import {
   insertUserMongoDB,
 } from "../repositories/mongo-connect.js";
 import { setDataRedis } from "../repositories/redis-connect.js";
-import { EncryptData } from "../utils/auth.js";
+import { encryptData } from "../utils/auth.js";
 
 async function registerUsecase({ name, email, password, repeat_password }) {
   try {
@@ -12,9 +12,10 @@ async function registerUsecase({ name, email, password, repeat_password }) {
 
     const result = await findUserMongoDB({ email: email });
 
-    if (result) throw new Error("User already exists.");
+    if (result)
+      throw new Error("User already exists.");
 
-    const { hash } = await EncryptData(password, email);
+    const { hash } = await encryptData(password, email);
 
     const insertData = await insertUserMongoDB({ name, email, password: hash });
 

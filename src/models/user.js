@@ -1,7 +1,8 @@
 import { mongoose } from "../database/connection.js";
 const Schema = mongoose.Schema;
 
-const categoriesModel = new Schema({
+const distanceAndTimeModalitiesModel = new Schema({
+  name: String,
   records: [
     {
       id: mongoose.ObjectId,
@@ -40,13 +41,13 @@ const UserModel = new Schema({
   modalities: [
     {
       cycling: {
-        categoriesModel,
+        distanceAndTimeModalitiesModel,
       },
       walking: {
-        categoriesModel,
+        distanceAndTimeModalitiesModel,
       },
       running: {
-        categoriesModel,
+        distanceAndTimeModalitiesModel,
       },
     },
   ],
