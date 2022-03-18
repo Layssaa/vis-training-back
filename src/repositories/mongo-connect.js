@@ -8,42 +8,20 @@ async function insertUserMongoDB(_obj) {
   return await User.create(_obj);
 }
 
-async function updateDataMongoDB(_type, _find, _obj) {
-  const switchModality = {
-    cycling: function (_obj) {
-      return {
-        cycling: { $push: { records: _obj } },
-      };
-    },
-    walking: function (_obj) {
-      return {
-        walking: { $push: { records: _obj } },
-      };
-    },
-    running: function (_obj) {
-      return {
-        running: { $push: { records: _obj } },
-      };
-    },
-  };
+async function updateDataMongoDB(_type, _findId, _obj) {
+  try {
+    const userFind = await User.findOne({ _id: _findId });
+    _obj.date = new Date()
 
-  const modality = await switchModality[_type](_obj);
+    userFind.modalities[_type].records.push(_obj);
+    userFind.updated_At = new Date().toString();
+    userFind.save();
 
-  if (!modality) throw Error("Invalid category");
-  console.log(_find, modality);
-
-  return await User.findOneAndUpdate(
-    { id: _find },
-    {
-      modalities: {
-        modality,
-      },
-    },
-    {
-      returnOriginal: false,
-    },
-    (err, doc) => (err ? console.log(err) : console.log(doc))
-  );
+    return { updated: userFind };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
 }
 
 export { findUserMongoDB, insertUserMongoDB, updateDataMongoDB };

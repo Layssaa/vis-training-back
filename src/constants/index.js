@@ -10,4 +10,5 @@ export default {
   not_token_provide: "No token provided.",
   expired_token: "expired token",
   try_a_different_password: "Try a different password than the previous one.",
+  an_error_occurred_while_sending: "An error occurred while sending",
 };

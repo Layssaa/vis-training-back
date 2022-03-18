@@ -1,19 +1,23 @@
-import * as Errors from "../constants/index.js";
+import e from "../constants/index.js";
 import { updateDataMongoDB } from "../repositories/mongo-connect.js";
 import { getDataRedis } from "../repositories/redis-connect.js";
 
-async function registerTrainingUseCase({ token, name, records }) {
+async function registerTrainingUseCase({ token, records }) {
   try {
-    const id  = await getDataRedis(`use-${token}`);
-    
-    if (!id) throw new Error("User not found!");
+    const { id } = await getDataRedis(`use-${token}`);
 
-    console.log("id encontrado____", id);
+    if (!id) throw new Error(e.user_not_found);
 
-    // Update into mongodb
-    const updated = await updateDataMongoDB(name, id, records);
-    console.log("updated!");
-    console.log(updated);
+    // Updated into mongodb - New data
+    const { updated, error } = await updateDataMongoDB(
+      records.name,
+      id,
+      records
+    );
+
+    if (error) {
+      throw new Error(e.an_error_occurred_while_sending);
+    }
 
     return { data: "Training registered successfully!" };
   } catch (error) {
