@@ -17,8 +17,6 @@ async function updateDataMongoDB(_type, _findId, _obj) {
     userFind.updated_At = new Date().toString();
     userFind.save();
 
-  if (!modality) throw Error("Invalid category");
-  
     return { updated: userFind };
   } catch (error) {
     console.log(error);
