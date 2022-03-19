@@ -17,6 +17,7 @@ async function registerUsecase({ name, email, password, repeat_password }) {
 
     const { hash } = await encryptData(password, email);
 
+
     const insertData = await insertUserMongoDB({ name, email, password: hash });
 
     await setDataRedis(`use-${email}`, { id: insertData.id });

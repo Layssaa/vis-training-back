@@ -1,8 +1,9 @@
-import e from "../constants/index.js";
+import * as e from "../constants/index.js";
 import { updateDataMongoDB } from "../repositories/mongo-connect.js";
 import { getDataRedis } from "../repositories/redis-connect.js";
 
-async function registerTrainingUseCase({ token, records }) {
+async function registerTrainingUseCase({ name, token, records }) {
+
   try {
     const { id } = await getDataRedis(`use-${token}`);
 
@@ -10,7 +11,7 @@ async function registerTrainingUseCase({ token, records }) {
 
     // Updated into mongodb - New data
     const { updated, error } = await updateDataMongoDB(
-      records.name,
+      name,
       id,
       records
     );

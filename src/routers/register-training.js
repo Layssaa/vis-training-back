@@ -1,7 +1,7 @@
 import { registerTrainingController } from "../controllers/register-training.js";
-import { verifyFields } from "../middlewares/verify-fields.js";
+import { verifyUndefinedFields } from "../middlewares/verify-undefined-fields.js";
 import { router } from "./router.js";
 
-router.post("/register-training", verifyFields, registerTrainingController);
+router.post("/register-training", verifyUndefinedFields, registerTrainingController);
 
 export { router };
