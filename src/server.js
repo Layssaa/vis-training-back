@@ -11,6 +11,7 @@ import {
   _registerUser,
   _updateData,
   _getConquests,
+  _registerTraining
 } from "./routers/index.js";
 
 const app = express();
@@ -35,5 +36,6 @@ app.use(_password);
 app.use(_registerUser);
 app.use(_updateData);
 app.use(_getConquests);
+app.use(_registerTraining);
 
 export default app;

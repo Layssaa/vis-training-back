@@ -2,7 +2,10 @@ import { mongoose } from "../database/connection.js";
 const Schema = mongoose.Schema;
 
 const distanceAndTimeModalitiesModel = new Schema({
-  name: String,
+  name: {
+    type: String,
+    default: "",
+  },
   records: [
     {
       id: mongoose.ObjectId,
@@ -38,19 +41,11 @@ const UserModel = new Schema({
   token: {
     type: String,
   },
-  modalities: [
-    {
-      cycling: {
-        distanceAndTimeModalitiesModel,
-      },
-      walking: {
-        distanceAndTimeModalitiesModel,
-      },
-      running: {
-        distanceAndTimeModalitiesModel,
-      },
-    },
-  ],
+  modalities: {
+    cycling: distanceAndTimeModalitiesModel,
+    walking: distanceAndTimeModalitiesModel,
+    running: distanceAndTimeModalitiesModel,
+  },
   create_At: {
     type: Date,
     default: Date.now(),

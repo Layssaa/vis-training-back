@@ -7,6 +7,8 @@ import { router as _password } from "./password.js";
 import { router as _registerUser } from "./register-user.js";
 import { router as _updateData } from "./update-data-user.js";
 import { router as _getConquests } from "./get-conquests.js";
+import { router as _registerTraining } from "./register-training.js";
+
 
 export {
   _getData,
@@ -18,4 +20,5 @@ export {
   _registerUser,
   _updateData,
   _getConquests,
+  _registerTraining
 };
