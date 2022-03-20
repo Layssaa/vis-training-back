@@ -9,13 +9,17 @@ async function getRoutersUsecase({ token, modality }) {
 
     if (!id) throw new Error(e.authErrors.no_token_provided);
 
-    const searchRedis = await getDataRedis(`listrouters:${token}:${modality}`);
+    const { result } = await getDataRedis(`listrouters:${token}:${modality}`);
 
-    if (searchRedis) {
-      return { data: searchRedis.result };
+    if (result) {
+      return { data: result };
     }
 
     const { modalities } = await findUserMongoDB({ _id: id });
+
+    if (!modalities[modality]) {
+      throw new Error(e.systemErros.could_not_find_any_route);
+    }
 
     await setDataRedis(`listrouters:${token}:${modality}`, {
       result: modalities[modality],

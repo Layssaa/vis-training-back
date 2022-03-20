@@ -1,5 +1,5 @@
 import { getRoutersUsecase } from "../usecase/get-routers.js";
-import * as e from "../constants/index.js"
+import * as e from "../constants/index.js";
 
 async function getRoutersController(req, res) {
   const { token, modality } = req.params;
@@ -8,9 +8,11 @@ async function getRoutersController(req, res) {
     const { data, error } = await getRoutersUsecase({ token, modality });
 
     if (error) throw new Error(error);
-    res.status(200).send(data);
+    res.status(e.responseStatus.ok).send(data);
   } catch (error) {
-    res.status(200).send({ status: 400, msg: e.systemErros.could_not_find_any_route });
+    res
+      .status(e.responseStatus.ok)
+      .send({ status: e.responseStatus.bad_request, msg: error.message });
   }
 }
 
