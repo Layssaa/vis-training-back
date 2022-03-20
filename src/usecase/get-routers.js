@@ -4,17 +4,17 @@ import * as e from "../constants/index.js";
 
 async function getRoutersUsecase({ token, modality }) {
   try {
-    const { id } = await getDataRedis(`use-${token}`);
+    const userIdentity = await getDataRedis(`use-${token}`);
 
-    if (!id) throw new Error(e.authErrors.no_token_provided);
+    if (!userIdentity) throw new Error(e.authErrors.no_token_provided);
 
-    const result  = await getDataRedis(`listrouters:${token}:${modality}`);
-    
+    const result = await getDataRedis(`listrouters:${token}:${modality}`);
+
     if (result) {
       return { data: result };
     }
 
-    const { modalities } = await findUserMongoDB({ _id: id });
+    const { modalities } = await findUserMongoDB({ _id: userIdentity.id });
 
     if (!modalities[modality]) {
       throw new Error(e.systemErros.could_not_find_any_route);

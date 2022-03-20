@@ -4,9 +4,9 @@ import * as e from "../constants/index.js";
 
 async function getSingleRouterUsecase({ token, IdRouter, modality }) {
   try {
-    const { id } = await getDataRedis(`use-${token}`);
+    const userIdentity = await getDataRedis(`use-${token}`);
 
-    if (!id) throw new Error(e.authErrors.no_token_provided);
+    if (!userIdentity) throw new Error(e.authErrors.no_token_provided);
 
     const result  = await getDataRedis(
       `router:${token}:${modality}:${IdRouter}`
@@ -16,7 +16,7 @@ async function getSingleRouterUsecase({ token, IdRouter, modality }) {
       return { data: result };
     }
 
-    const userFind = await findUserMongoDB({ _id: id });
+    const userFind = await findUserMongoDB({ _id: userIdentity.id });
 
     const records = userFind.modalities[modality].records.id(IdRouter);
     const { name } = userFind.modalities[modality];
