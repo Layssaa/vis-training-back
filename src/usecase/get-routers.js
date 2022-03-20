@@ -1,6 +1,5 @@
 import { getDataRedis, setDataRedis } from "../repositories/redis-connect.js";
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
-
 import * as e from "../constants/index.js";
 
 async function getRoutersUsecase({ token, modality }) {
@@ -9,8 +8,8 @@ async function getRoutersUsecase({ token, modality }) {
 
     if (!id) throw new Error(e.authErrors.no_token_provided);
 
-    const { result } = await getDataRedis(`listrouters:${token}:${modality}`);
-
+    const result  = await getDataRedis(`listrouters:${token}:${modality}`);
+    
     if (result) {
       return { data: result };
     }

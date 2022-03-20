@@ -8,7 +8,7 @@ async function getSingleRouterUsecase({ token, IdRouter, modality }) {
 
     if (!id) throw new Error(e.authErrors.no_token_provided);
 
-    const { result } = await getDataRedis(
+    const result  = await getDataRedis(
       `router:${token}:${modality}:${IdRouter}`
     );
 
