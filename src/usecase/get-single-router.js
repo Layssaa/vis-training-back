@@ -1,11 +1,12 @@
 import { getDataRedis, setDataRedis } from "../repositories/redis-connect.js";
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
+import * as e from "../constants/index.js";
 
 async function getSingleRouterUsecase({ token, IdRouter, modality }) {
   try {
     const { id } = await getDataRedis(`use-${token}`);
 
-    if (!id) throw new Error("No token provided.");
+    if (!id) throw new Error(e.authErrors.no_token_provided);
 
     const searchRedis = await getDataRedis(
       `router:${token}:${modality}:${IdRouter}`

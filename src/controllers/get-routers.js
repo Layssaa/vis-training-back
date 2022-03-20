@@ -1,11 +1,8 @@
 import { getRoutersUsecase } from "../usecase/get-routers.js";
+import * as e from "../constants/index.js"
 
 async function getRoutersController(req, res) {
-  console.log("GET ROUTERS");
   const { token, modality } = req.params;
-
-  console.log(token);
-  console.log(modality);
 
   try {
     const { data, error } = await getRoutersUsecase({ token, modality });
@@ -13,8 +10,7 @@ async function getRoutersController(req, res) {
     if (error) throw new Error(error);
     res.status(200).send(data);
   } catch (error) {
-    console.log(error);
-    res.status(200).send({ status: 400, msg: "Unable to fetch your routes" });
+    res.status(200).send({ status: 400, msg: e.systemErros.could_not_find_any_route });
   }
 }
 

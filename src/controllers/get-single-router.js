@@ -1,4 +1,6 @@
 import { getSingleRouterUsecase } from "../usecase/get-single-router.js";
+import * as e from "../constants/index.js";
+
 
 async function getSingleRouterController(req, res) {
   const { token, IdRouter, modality } = req.params;
@@ -9,8 +11,7 @@ async function getSingleRouterController(req, res) {
     if (error) throw new Error(error);
     res.status(200).send(data);
   } catch (error) {
-    console.log(error);
-    res.status(200).send({ status: 400, msg: "Could not find this route" });
+    res.status(200).send({ status: 400, msg: e.systemErros.could_not_find_this_route });
   }
 }
 

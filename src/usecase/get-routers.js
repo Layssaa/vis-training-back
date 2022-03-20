@@ -7,12 +7,11 @@ async function getRoutersUsecase({ token, modality }) {
   try {
     const { id } = await getDataRedis(`use-${token}`);
 
-    if (!id) throw new Error("No token provided.");
+    if (!id) throw new Error(e.authErrors.no_token_provided);
 
     const searchRedis = await getDataRedis(`listrouters:${token}:${modality}`);
 
     if (searchRedis) {
-      console.log("redis");
       return { data: searchRedis.result };
     }
 
