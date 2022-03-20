@@ -7,11 +7,27 @@ async function getSingleRouterUsecase({ token, IdRouter, modality }) {
 
     if (!id) throw new Error("No token provided.");
 
+    const searchRedis = await getDataRedis(
+      `router:${token}:${modality}:${IdRouter}`
+    );
+
+    if (searchRedis) {
+      return { data: searchRedis.result };
+    }
+
     const userFind = await findUserMongoDB({ _id: id });
 
     const records = userFind.modalities[modality].records.id(IdRouter);
+    const { name } = userFind.modalities[modality];
 
-    return { data: records };
+    await setDataRedis(`router:${token}:${modality}:${IdRouter}`, {
+      result: {
+        name,
+        records,
+      },
+    });
+
+    return { data: { name, records } };
   } catch (error) {
     return { error };
   }
