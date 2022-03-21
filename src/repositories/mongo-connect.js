@@ -10,19 +10,24 @@ async function insertUserMongoDB(_obj) {
 
 async function updateDataMongoDB(_type, _findId, _obj) {
   try {
+    const obj = {
+      ..._obj,
+      date: new Date(),
+    };
+
     let userFind;
     if (_type === "running") {
       userFind = await User.findOneAndUpdate(
         { _id: _findId },
         {
           $push: {
-            "modalities.running.records": _obj,
+            "modalities.running.records": obj,
           },
           $set: {
             "modalities.running.name": _type,
           },
         },
-        { returnDocument: 'after' }
+        { returnDocument: "after" }
       );
     }
 
@@ -31,13 +36,13 @@ async function updateDataMongoDB(_type, _findId, _obj) {
         { _id: _findId },
         {
           $push: {
-            "modalities.cycling.records": _obj,
+            "modalities.cycling.records": obj,
           },
           $set: {
             "modalities.cycling.name": _type,
           },
         },
-        { returnDocument: 'after' }
+        { returnDocument: "after" }
       );
     }
 
@@ -46,18 +51,17 @@ async function updateDataMongoDB(_type, _findId, _obj) {
         { _id: _findId },
         {
           $push: {
-            "modalities.walking.records": _obj,
+            "modalities.walking.records": obj,
           },
           $set: {
             "modalities.walking.name": _type,
           },
         },
-        { returnDocument: 'after' }
+        { returnDocument: "after" }
       );
     }
-
-    console.log("user finded");
-    console.log(userFind.modalities.walking.records);
+    userFind.updated_At = new Date();
+    await userFind.save();
 
     return { updated: userFind };
   } catch (error) {
@@ -66,4 +70,31 @@ async function updateDataMongoDB(_type, _findId, _obj) {
   }
 }
 
-export { findUserMongoDB, insertUserMongoDB, updateDataMongoDB };
+async function findByDate({ from, to, modality, id }) {
+  const userFounded = await User.findOne({ _id: id });
+
+  const result = userFounded.modalities[modality].records.filter((elem) => {
+    if(!elem.date){
+      return
+    }
+
+    const biggerThen =
+      changeTimeToMilliseconds(elem.date) >= changeTimeToMilliseconds(from);
+    const lessThan =
+      changeTimeToMilliseconds(elem.date) <= changeTimeToMilliseconds(to);
+
+
+    if (biggerThen && lessThan) {
+      return elem;
+    }
+  });
+
+  return result
+}
+
+
+function changeTimeToMilliseconds(_time) {
+  return new Date(_time);
+}
+
+export { findUserMongoDB, insertUserMongoDB, updateDataMongoDB, findByDate };
