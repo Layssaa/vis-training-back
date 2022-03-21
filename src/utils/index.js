@@ -1,2 +1,2 @@
 export * from "./auth.js";
-export * from "./auth-jwt";
+export * from "./auth-jwt.js";
