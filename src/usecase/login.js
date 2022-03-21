@@ -2,6 +2,8 @@ import { findUserMongoDB } from "../repositories/mongo-connect.js";
 import { getDataRedis, setDataRedis } from "../repositories/redis-connect.js";
 import { authenticateUser } from "../utils/auth.js";
 
+import { responseMessages, responseStatus } from "../constants/index.js";
+
 //Falta fazer
 // - jwt
 async function loginUsecase(_user) {
@@ -13,20 +15,39 @@ async function loginUsecase(_user) {
 
     if (!ifUserLogged) {
       dataUser = await findUserMongoDB({ email: email });
-      console.log(dataUser);
-      if (dataUser.length == 0 || !dataUser) throw new Error("User not found");
 
-      if (!(await authenticateUser(password, email, dataUser.password))) {
-        throw new Error("Incorrect data");
-      }
+      if (!dataUser)
+        return ({
+          status: responseStatus.not_found,
+          error: responseMessages.user_not_found,
+        });
 
-      await setDataRedis(`use-${email}`, { id: dataUser.id });
+      if (Object.keys(dataUser)?.length === 0)
+        return ({
+          status: responseStatus.not_found,
+          error: responseMessages.user_not_found,
+        });
+
+      if (!(await authenticateUser(password, email, dataUser.password)))
+        return ({
+          status: responseStatus.forbidden,
+          error: responseMessages.invalid_password,
+        });
+
+      await setDataRedis(`use-${email}`, { id: dataUser._id });
     }
 
-    return { data: ifUserLogged || dataUser };
+    return {
+      status: responseStatus.ok,
+      data: ifUserLogged || { id: dataUser._id },
+    };
   } catch (error) {
     console.log(error);
-    return error;
+
+    return ({
+      status: responseStatus.internal_server_error,
+      error: responseMessages.internal_server_error,
+    });
   }
 }
 
