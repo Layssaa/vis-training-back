@@ -1,7 +1,6 @@
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
 import { getDataRedis, setDataRedis } from "../repositories/redis-connect.js";
-import { authenticateUser } from "../utils/auth.js";
-
+import { authenticateUser, createToken } from "../utils/auth.js";
 import { responseMessages, responseStatus } from "../constants/index.js";
 
 //Falta fazer
@@ -33,13 +32,25 @@ async function loginUsecase(_user) {
           status: responseStatus.forbidden,
           error: responseMessages.invalid_password,
         });
+      
+      const token = createToken(
+        `${ifUserLogged?.id || dataUser._id}:${email}:${new Date().getTime()}`
+      );
 
       await setDataRedis(`use-${email}`, { id: dataUser._id });
-    }
+
+      return {
+        status: responseStatus.ok,
+        data: {
+          id: dataUser._id,
+          token: token,
+        },
+      };
+    };
 
     return {
       status: responseStatus.ok,
-      data: ifUserLogged || { id: dataUser._id },
+      data: ifUserLogged,
     };
   } catch (error) {
     console.log(error);
