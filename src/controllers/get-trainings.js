@@ -7,11 +7,11 @@ async function getTrainingsController(req, res) {
     const { data, error } = await getTrainingsUsecase({ from, to, modality, token });
 
     if (error) throw new Error(error);
-    res.status(200).send(data);
 
+    res.status(200).send(data);
   } catch (error) {
       console.log(error);
-    res.status(200).send("erooooooou");
+    res.status(200).send(error.message);
   }
 }
 
