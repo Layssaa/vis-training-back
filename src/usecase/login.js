@@ -1,6 +1,6 @@
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
 import { getDataRedis, setDataRedis } from "../repositories/redis-connect.js";
-import { authenticateUser, createToken } from "../utils/auth.js";
+import { authenticateUser, createToken } from "../utils/index.js";
 import { responseMessages, responseStatus } from "../constants/index.js";
 
 //Falta fazer
