@@ -7,6 +7,7 @@ import {
   _getRouters,
   _getTraining,
   _login,
+  _logout,
   _password,
   _registerUser,
   _updateData,
@@ -32,6 +33,7 @@ app.use(_getEvolution);
 app.use(_getRouters);
 app.use(_getTraining);
 app.use(_login);
+app.use(_logout);
 app.use(_password);
 app.use(_registerUser);
 app.use(_updateData);
