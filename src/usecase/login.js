@@ -33,16 +33,21 @@ async function loginUsecase(_user) {
           error: responseMessages.invalid_password,
         });
       
-      const token = createToken(
+      const { token } = createToken(
         `${ifUserLogged?.id || dataUser._id}:${email}:${new Date().getTime()}`
       );
 
-      await setDataRedis(`use-${email}`, { id: dataUser._id });
+      await setDataRedis(`use-${email}`, {
+        id: dataUser._id,
+        email: dataUser.email,
+        token: token,
+      });
 
       return {
         status: responseStatus.ok,
         data: {
           id: dataUser._id,
+          email: dataUser.email,
           token: token,
         },
       };
