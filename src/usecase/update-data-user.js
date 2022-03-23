@@ -6,7 +6,7 @@ async function updateDataUserUsecase({ updates, token }) {
 
   try {
     if (Object.keys(updates).find((elem) => elem == "password")) {
-      return;
+      throw new Error(authErrors.it_is_not_possible_to_update_the_password_for_now_via_this_route);
     }
 
     const userIdentity = await getDataRedis(`use-${token}`);

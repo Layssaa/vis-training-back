@@ -9,7 +9,8 @@ const authErrors = {
   invalid_token: "Invalid token.",
   expired_token: "expired token",
   try_a_different_password: "Try a different password than the previous one.",
-  invalid_filters: "Invalid filters"
+  invalid_filters: "Invalid filters",
+  it_is_not_possible_to_update_the_password_for_now_via_this_route:"It is not possible to update the password for now via this route."
 };
 
 const systemErros = {
