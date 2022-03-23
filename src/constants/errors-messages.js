@@ -18,8 +18,13 @@ const systemErros = {
   an_error_occurred_while_sending: "An error occurred while sending",
   could_not_find_any_route: "Could not find any route.",
   we_could_not_find_any_workouts: "We couldn't find any workouts with these filters.",
+<<<<<<< HEAD
   could_not_update_data: "Could not update data",
   could_not_reset_password_please_try_again : "Could not reset password, please try again"
+=======
+  invalid_modality: "Invalid modality",
+  there_are_not_enough_records_to_analyze_the_evolution: "There are not enough records to analyze the evolution"
+>>>>>>> 3010f2b (create: first files)
 };
 
 export { authErrors, systemErros };

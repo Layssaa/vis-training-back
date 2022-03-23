@@ -1,5 +1,9 @@
 import { User } from "../models/index.js";
+<<<<<<< HEAD
 import * as e from "../constants/index.js";
+=======
+import { toMilliseconds } from "../utils/parse-time-to-milliseconds.js";
+>>>>>>> 10d18a4 (create: first files)
 
 async function findUserMongoDB(_obj) {
   return await User.findOne({ ..._obj });
@@ -205,3 +209,63 @@ async function sortBetterPositions(_array, _category) {
       training1[`${_category}`] >= training2[`${_category}`] ? -1 : 1
     );
 }
+async function getEvolutionMongoDB({ modality, id }) {
+  try {
+    const dateNow = new Date().toISOString();
+    const oneMonth = 2628000000;
+    const threeMonths = 5256000000;
+
+    const userFounded = await User.findById({ _id: id });
+
+    let result = userFounded.modalities[modality].records;
+
+    result = result
+      .sort((date1, date2) => {
+        console.log(date1);
+        console.log(date2);
+
+        toMilliseconds(date1) >= toMilliseconds(date2) ? 1 : -1;
+      })
+      .slice(0, 4);
+
+    for (let i = 0; i <= result.lenght - 1 ; i++) {
+      console.log('_______ inside FOR ______');
+      result[i].evolutionTime = countPorcent(
+        result[i + 1].time,
+        result[i].time
+      );
+      result[i].evolutionDistance = countPorcent(
+        result[i + 1].distance,
+        result[i].distance
+      );
+      result[i].evolutionElevation = countPorcent(
+        result[i + 1].elevation_gain,
+        result[i].elevation_gain
+      );
+    }
+    console.log("________________RESULT_______________");
+    console.log(result);
+
+    return { result };
+  } catch (error) {
+    return error;
+  }
+
+
+}
+
+function averageMonth(_arrayToCalc){
+  
+}
+
+function countPorcent(_from, _to) {
+  return ((_to - _from) * 100) / _from;
+}
+
+export {
+  findUserMongoDB,
+  insertUserMongoDB,
+  updateDataMongoDB,
+  findByDate,
+  getEvolutionMongoDB,
+};
