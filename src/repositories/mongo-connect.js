@@ -15,51 +15,19 @@ async function updateDataMongoDB(_type, _findId, _obj) {
       date: new Date(),
     };
 
-    let userFind;
-    if (_type === "running") {
-      userFind = await User.findOneAndUpdate(
-        { _id: _findId },
-        {
-          $push: {
-            "modalities.running.records": obj,
-          },
-          $set: {
-            "modalities.running.name": _type,
-          },
+    const userFind = await User.findOneAndUpdate(
+      { _id: _findId },
+      {
+        $push: {
+          [`modalities.${_type}.records`]: obj,
         },
-        { returnDocument: "after" }
-      );
-    }
+        $set: {
+          [`modalities.${_type}.name`]: _type,
+        },
+      },
+      { returnDocument: "after" }
+    );
 
-    if (_type === "cycling") {
-      userFind = await User.findOneAndUpdate(
-        { _id: _findId },
-        {
-          $push: {
-            "modalities.cycling.records": obj,
-          },
-          $set: {
-            "modalities.cycling.name": _type,
-          },
-        },
-        { returnDocument: "after" }
-      );
-    }
-
-    if (_type === "walking") {
-      userFind = await User.findOneAndUpdate(
-        { _id: _findId },
-        {
-          $push: {
-            "modalities.walking.records": obj,
-          },
-          $set: {
-            "modalities.walking.name": _type,
-          },
-        },
-        { returnDocument: "after" }
-      );
-    }
     userFind.updated_At = new Date();
     await userFind.save();
 
@@ -110,7 +78,6 @@ async function updateUserDataMongoDB({ updates, id }) {
     return { error };
   }
 }
-
 
 export {
   findUserMongoDB,
