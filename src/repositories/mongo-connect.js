@@ -97,8 +97,29 @@ async function findByDate({ from, to, modality, id }) {
   }
 }
 
+async function updateUserDataMongoDB({ updates, id }) {
+  try {
+    const updated = await User.findOneAndUpdate(
+      { _id: id },
+      { ...updates },
+      { returnDocument: "after" }
+    );
+
+    return { updated };
+  } catch (error) {
+    return { error };
+  }
+}
+
+
+export {
+  findUserMongoDB,
+  insertUserMongoDB,
+  updateDataMongoDB,
+  findByDate,
+  updateUserDataMongoDB,
+};
+
 function toMilliseconds(_time) {
   return new Date(_time);
 }
-
-export { findUserMongoDB, insertUserMongoDB, updateDataMongoDB, findByDate };
