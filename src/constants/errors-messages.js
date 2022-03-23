@@ -16,7 +16,8 @@ const systemErros = {
   could_not_find_this_route: "Could not find this route",
   an_error_occurred_while_sending: "An error occurred while sending",
   could_not_find_any_route: "Could not find any route.",
-  we_could_not_find_any_workouts: "We couldn't find any workouts with these filters."
+  we_could_not_find_any_workouts: "We couldn't find any workouts with these filters.",
+  could_not_update_data: "Could not update data"
 };
 
 export { authErrors, systemErros };
