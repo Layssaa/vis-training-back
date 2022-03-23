@@ -2,8 +2,8 @@ import { authErrors, responseStatus } from "../constants/index.js";
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
 import {
   getDataRedis,
-  setDataWithTimestamp,
-} from "../repositories/redis-connect.js";
+  setDataRedis,
+  } from "../repositories/redis-connect.js";
 
 async function getDataUsecase({ token }) {
   try {
@@ -21,12 +21,11 @@ async function getDataUsecase({ token }) {
 
     const userFounded = await findUserMongoDB({ _id: userIdentity.id });
 
-    await setDataWithTimestamp(
+    await setDataRedis(
       `data::user::${token}`,
       {
         result: userFounded,
-      },
-      60
+      }
     );
     
     return {
