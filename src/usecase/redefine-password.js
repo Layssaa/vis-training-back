@@ -16,20 +16,6 @@ async function redefinePasswordUsecase(email) {
       id: ifUserExist.id,
     });
 
-    // mailer.sendMail(
-    //   {
-    //     to: email,
-    //     from: "lay@gmail.com",
-    //     subject: "Recovery password",
-    //     template: "./forgot_password",
-    //     context: { token },
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //     if (err) throw new Error(err.message);
-    //   }
-    // );
-
     return { data: "Recovery email sent!" };
   } catch (error) {
     console.log(error);
