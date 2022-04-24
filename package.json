@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Layssaa/vis-training-back#readme",
   "dependencies": {
+    "aws-sdk": "^2.1102.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
