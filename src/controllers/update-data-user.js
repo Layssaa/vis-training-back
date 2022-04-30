@@ -2,7 +2,8 @@ import { responseStatus, responseMessages } from "../constants/index.js";
 import { updateDataUserUsecase } from "../usecase/update-data-user.js";
 
 async function updateDataUserController(req, res) {
-  const { token } = req.body;
+  // const { token } = req.body;
+  const token = req.headers.authorization;
   delete req.body.token;
 
   const updates = req.body;

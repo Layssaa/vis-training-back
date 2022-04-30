@@ -5,7 +5,9 @@ import {
 } from "../usecase/reset-password.js";
 
 async function verifyToken(req, res) {
-  const { token } = req.body;
+  // const { token } = req.body;
+  const token = req.headers.authorization;
+
 
   try {
     const { data, error } = await verifyTokenUseCase(token);

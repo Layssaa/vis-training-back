@@ -5,8 +5,10 @@ import { responseMessages, responseStatus } from "../constants/index.js";
 
 //Falta fazer
 // - jwt
-async function loginUsecase(_user) {
-  const { email, password, token } = _user;
+async function loginUsecase(_user, _token) {
+  const { email, password } = _user;
+  const token = _token;
+  
   let dataUser;
 
   try {

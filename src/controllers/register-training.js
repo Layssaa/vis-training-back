@@ -2,7 +2,9 @@ import { registerTrainingUseCase } from "../usecase/register-training.js";
 
 async function registerTrainingController(req, res) {
   // nesse token precisa vir o email, por hora
-  const { token, records, name } = req.body;
+  // mudança p token no header
+  const token = req.headers.authorization;
+  const { records, name } = req.body;
 
   try {
     const { data, error } = await registerTrainingUseCase({

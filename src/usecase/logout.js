@@ -3,8 +3,8 @@ import { responseMessages, responseStatus } from "../constants/index.js";
 
 //Falta fazer
 // - jwt
-async function logoutUsecase(_user) {
-  const { token } = _user;
+async function logoutUsecase(_token) {
+  const token = _token;
 
   try {
     await deleteSessionRedis(`use-${token}`);
@@ -15,10 +15,10 @@ async function logoutUsecase(_user) {
   } catch (error) {
     console.log(error);
 
-    return ({
+    return {
       status: responseStatus.internal_server_error,
       error: responseMessages.internal_server_error,
-    });
+    };
   }
 }
 
