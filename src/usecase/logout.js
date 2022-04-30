@@ -4,10 +4,10 @@ import { responseMessages, responseStatus } from "../constants/index.js";
 //Falta fazer
 // - jwt
 async function logoutUsecase(_user) {
-  const { email } = _user;
+  const { token } = _user;
 
   try {
-    await deleteSessionRedis(`use-${email}`);
+    await deleteSessionRedis(`use-${token}`);
 
     return {
       status: responseStatus.ok,

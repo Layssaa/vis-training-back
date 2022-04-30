@@ -6,38 +6,38 @@ import { responseMessages, responseStatus } from "../constants/index.js";
 //Falta fazer
 // - jwt
 async function loginUsecase(_user) {
-  const { email, password } = _user;
+  const { email, password, token } = _user;
   let dataUser;
 
   try {
-    const ifUserLogged = await getDataRedis(`use-${email}`);
+    const ifUserLogged = await getDataRedis(`use-${token}`);
 
     if (!ifUserLogged) {
       dataUser = await findUserMongoDB({ email: email });
 
       if (!dataUser)
-        return ({
+        return {
           status: responseStatus.not_found,
           error: responseMessages.user_not_found,
-        });
+        };
 
       if (Object.keys(dataUser)?.length === 0)
-        return ({
+        return {
           status: responseStatus.not_found,
           error: responseMessages.user_not_found,
-        });
+        };
 
       if (!(await authenticateUser(password, email, dataUser.password)))
-        return ({
+        return {
           status: responseStatus.forbidden,
           error: responseMessages.invalid_password,
-        });
-      
+        };
+
       const { token } = createToken(
         `${ifUserLogged?.id || dataUser._id}:${email}:${new Date().getTime()}`
       );
 
-      await setDataRedis(`use-${email}`, {
+      await setDataRedis(`use-${token}`, {
         id: dataUser._id,
         email: dataUser.email,
         token: token,
@@ -51,7 +51,7 @@ async function loginUsecase(_user) {
           token: token,
         },
       };
-    };
+    }
 
     return {
       status: responseStatus.ok,
@@ -60,10 +60,10 @@ async function loginUsecase(_user) {
   } catch (error) {
     console.log(error);
 
-    return ({
+    return {
       status: responseStatus.internal_server_error,
       error: responseMessages.internal_server_error,
-    });
+    };
   }
 }
 
