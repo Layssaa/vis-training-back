@@ -79,14 +79,91 @@ async function updateUserDataMongoDB({ updates, id }) {
   }
 }
 
+async function getConquestsUser({ id }) {
+  try {
+    const result = {};
+    const { modalities } = await User.findById({ _id: id });
+    const { running, walking, cycling } = modalities;
+    const categories = ["elevation", "distance", "speed"];
+
+    // =======================================
+    // - ORDERING FROM GREATEST TO SMALLEST -
+    // =======================================
+
+    //            CYCLING CATEGORY
+    if (cycling) {
+      console.log("Have cycling");
+      const conquestCycling = cycling.records;
+
+      result.cycling.distance = sortBetterPositions(
+        conquestCycling,
+        "distance"
+      )[0];
+      result.cycling.speed = sortBetterPositions(conquestCycling, "speed")[0];
+      result.cycling.elevation = sortBetterPositions(
+        conquestCycling,
+        "elevation"
+      )[0];
+    }
+
+    //            WALKING CATEGORY
+    if (walking) {
+      console.log("Have walking");
+      const conquestWalking = walking.records;
+
+      result.walking.distance = sortBetterPositions(
+        conquestWalking,
+        "distance"
+      )[0];
+
+      result.walking.speed = sortBetterPositions(conquestWalking, "speed")[0];
+
+      result.walking.elevation = sortBetterPositions(
+        conquestWalking,
+        "elevation"
+      )[0];
+    }
+
+    //            RUNNING CATEGORY
+    if (running) {
+      console.log("Have running");
+      const conquestRunning = running.records;
+
+      result.running.distance = sortBetterPositions(
+        conquestRunning,
+        "distance"
+      )[0];
+      result.running.speed = sortBetterPositions(conquestRunning, "speed")[0];
+      result.running.elevation = sortBetterPositions(
+        conquestRunning,
+        "elevation"
+      )[0];
+    }
+
+    console.log("_________RESULT__________");
+    console.log(result);
+
+    return { result };
+  } catch (error) {
+    return { error };
+  }
+}
+
 export {
   findUserMongoDB,
   insertUserMongoDB,
   updateDataMongoDB,
   findByDate,
   updateUserDataMongoDB,
+  getConquestsUser,
 };
 
 function toMilliseconds(_time) {
   return new Date(_time);
+}
+
+function sortBetterPositions(_array, _category) {
+  return _array.sort((training1, training2) =>
+    training1[`${_category}`] >= training2[`${_category}`] ? -1 : 1
+  );
 }
