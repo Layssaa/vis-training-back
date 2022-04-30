@@ -2,8 +2,10 @@ import { loginUsecase } from "../usecase/login.js";
 import { responseStatus, responseMessages } from "../constants/index.js";
 
 async function loginController(req, res) {
+  const token = req.headers.authorization;
+
   try {
-    const { status, data, error } = await loginUsecase(req.body);
+    const { status, data, error } = await loginUsecase(req.body, token);
 
     if (status !== responseStatus.ok) {
       // criar log de errors
