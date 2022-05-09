@@ -11,8 +11,6 @@ async function getConquestsUsecase({ id }) {
       data: result,
     };
   } catch (error) {
-    console.log("_________ERROR__________");
-    console.log(error);
     return { error };
   }
 }

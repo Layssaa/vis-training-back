@@ -194,6 +194,7 @@ async function sortBetterPositions(_array, _category) {
   const today = toMilliseconds(new Date());
   const after = today - oneMonth;
 
+  // ------- FILTERING WORKOUTS FROM THE LAST MONTH -------
   return await _array
     .filter((router) => {
       if (toMilliseconds(router.date) >= after) {
