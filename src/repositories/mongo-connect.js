@@ -228,8 +228,8 @@ async function getEvolutionMongoDB({ modality, id }) {
       })
       .slice(0, 4);
 
-    for (let i = 0; i <= result.lenght - 1 ; i++) {
-      console.log('_______ inside FOR ______');
+    for (let i = 0; i <= result.lenght - 1; i++) {
+      console.log("_______ inside FOR ______");
       result[i].evolutionTime = countPorcent(
         result[i + 1].time,
         result[i].time
@@ -250,16 +250,16 @@ async function getEvolutionMongoDB({ modality, id }) {
   } catch (error) {
     return error;
   }
-
-
 }
 
-function averageMonth(_arrayToCalc){
-  
-}
+function averageMonth(_arrayToCalc) {}
 
 function countPorcent(_from, _to) {
   return ((_to - _from) * 100) / _from;
+}
+
+function toMilliseconds(_time) {
+  return new Date(_time);
 }
 
 export {
@@ -267,5 +267,6 @@ export {
   insertUserMongoDB,
   updateDataMongoDB,
   findByDate,
+  updateUserDataMongoDB,
   getEvolutionMongoDB,
 };
