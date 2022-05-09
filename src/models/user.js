@@ -14,6 +14,7 @@ const distanceAndTimeModalitiesModel = new Schema({
       distance: Number,
       time: Number,
       elevation_gain: Number,
+      speed: Number,
     },
   ],
 });
