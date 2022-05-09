@@ -1,4 +1,5 @@
 import { User } from "../models/index.js";
+import * as e from "../constants/index.js";
 
 async function findUserMongoDB(_obj) {
   return await User.findOne({ ..._obj });
@@ -80,72 +81,98 @@ async function updateUserDataMongoDB({ updates, id }) {
 }
 
 async function getConquestsUser({ id }) {
+  const result = {
+    running: {
+      distance: [],
+      speed: [],
+      elevation_gain: [],
+    },
+    walking: {
+      distance: [],
+      speed: [],
+      elevation_gain: [],
+    },
+    cycling: {
+      distance: [],
+      speed: [],
+      elevation_gain: [],
+    },
+  };
+
   try {
-    const result = {};
     const { modalities } = await User.findById({ _id: id });
     const { running, walking, cycling } = modalities;
-    const categories = ["elevation", "distance", "speed"];
 
     // =======================================
     // - ORDERING FROM GREATEST TO SMALLEST -
     // =======================================
 
-    //            CYCLING CATEGORY
+    // // --------------- CYCLING CATEGORY ---------------
     if (cycling) {
       console.log("Have cycling");
       const conquestCycling = cycling.records;
 
-      result.cycling.distance = sortBetterPositions(
-        conquestCycling,
-        "distance"
+      const betterDistance = (
+        await sortBetterPositions(conquestCycling, "distance")
       )[0];
-      result.cycling.speed = sortBetterPositions(conquestCycling, "speed")[0];
-      result.cycling.elevation = sortBetterPositions(
-        conquestCycling,
-        "elevation"
+
+      const betterSpeed = (
+        await sortBetterPositions(conquestCycling, "speed")
       )[0];
+      const betterElevation = (
+        await sortBetterPositions(conquestCycling, "elevation_gain")
+      )[0];
+
+      result.cycling.distance = betterDistance;
+      result.cycling.speed = betterSpeed;
+      result.cycling.elevation_gain = betterElevation;
     }
 
-    //            WALKING CATEGORY
+    // //  --------------- WALKING CATEGORY ---------------
     if (walking) {
       console.log("Have walking");
       const conquestWalking = walking.records;
 
-      result.walking.distance = sortBetterPositions(
-        conquestWalking,
-        "distance"
+      const betterDistance = (
+        await sortBetterPositions(conquestWalking, "distance")
+      )[0];
+      const betterSpeed = (
+        await sortBetterPositions(conquestWalking, "speed")
+      )[0];
+      const betterElevation = (
+        await sortBetterPositions(conquestWalking, "elevation_gain")
       )[0];
 
-      result.walking.speed = sortBetterPositions(conquestWalking, "speed")[0];
-
-      result.walking.elevation = sortBetterPositions(
-        conquestWalking,
-        "elevation"
-      )[0];
+      result.walking.distance = betterDistance;
+      result.walking.speed = betterSpeed;
+      result.walking.elevation_gain = betterElevation;
     }
 
-    //            RUNNING CATEGORY
+    // //  ---------------  RUNNING CATEGORY ---------------
     if (running) {
       console.log("Have running");
       const conquestRunning = running.records;
 
-      result.running.distance = sortBetterPositions(
-        conquestRunning,
-        "distance"
+      const betterDistance = (
+        await sortBetterPositions(conquestRunning, "distance")
       )[0];
-      result.running.speed = sortBetterPositions(conquestRunning, "speed")[0];
-      result.running.elevation = sortBetterPositions(
-        conquestRunning,
-        "elevation"
+      const betterSpeed = (
+        await sortBetterPositions(conquestRunning, "speed")
       )[0];
-    }
+      const betterElevation = (
+        await sortBetterPositions(conquestRunning, "elevation_gain")
+      )[0];
 
-    console.log("_________RESULT__________");
-    console.log(result);
+      result.running.distance = betterDistance;
+      result.running.speed = betterSpeed;
+      result.running.elevation_gain = betterElevation;
+    }
 
     return { result };
   } catch (error) {
-    return { error };
+    return {
+      error: e.responseMessages.unable_to_access_this_months_achievements,
+    };
   }
 }
 
@@ -162,8 +189,18 @@ function toMilliseconds(_time) {
   return new Date(_time);
 }
 
-function sortBetterPositions(_array, _category) {
-  return _array.sort((training1, training2) =>
-    training1[`${_category}`] >= training2[`${_category}`] ? -1 : 1
-  );
+async function sortBetterPositions(_array, _category) {
+  const oneMonth = toMilliseconds(2628000000);
+  const today = toMilliseconds(new Date());
+  const after = today - oneMonth;
+
+  return await _array
+    .filter((router) => {
+      if (toMilliseconds(router.date) >= after) {
+        return router;
+      }
+    })
+    .sort((training1, training2) =>
+      training1[`${_category}`] >= training2[`${_category}`] ? -1 : 1
+    );
 }

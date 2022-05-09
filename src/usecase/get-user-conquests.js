@@ -2,12 +2,13 @@ import { getConquestsUser } from "../repositories/mongo-connect.js";
 
 async function getConquestsUsecase({ id }) {
   try {
-    const findUser = await getConquestsUser({ id });
+    const {result, error } = await getConquestsUser({ id });
 
-    if (!findUser) throw new Error("User not found");
+
+    if(error) throw new Error(error);
 
     return {
-      data: findUser.result,
+      data: result,
     };
   } catch (error) {
     console.log("_________ERROR__________");

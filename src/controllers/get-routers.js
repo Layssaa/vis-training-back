@@ -2,7 +2,8 @@ import { getRoutersUsecase } from "../usecase/get-routers.js";
 import * as e from "../constants/index.js";
 
 async function getRoutersController(req, res) {
-  const { token, modality } = req.params;
+  const token = req.headers.authorization;
+  const { modality } = req.params;
 
   try {
     const { data, error } = await getRoutersUsecase({ token, modality });

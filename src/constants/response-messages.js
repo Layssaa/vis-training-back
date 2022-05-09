@@ -16,6 +16,7 @@ const responseMessages = {
   try_a_different_password: "Try a different password than the previous one.",
   all_information_must_be_completed: "All information must be completed.",
   internal_server_error: "Internal server error.",
+  unable_to_access_this_months_achievements: "Unable to access this month's achievements"
 };
 
 export { responseMessages };

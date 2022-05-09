@@ -26,7 +26,7 @@ async function registerUsecase({ name, email, password, repeat_password }) {
 
     await setDataRedis(`use-${token}`, {
       id: insertData.id,
-      email: dataUser.email,
+      email: email,
       token: token,
     });
 
@@ -34,7 +34,7 @@ async function registerUsecase({ name, email, password, repeat_password }) {
       status: responseStatus.ok,
       data: {
         id: insertData.id,
-        email: dataUser.email,
+        email: email,
         token: token,
       },
     };
