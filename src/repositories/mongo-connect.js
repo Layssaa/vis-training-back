@@ -1,9 +1,6 @@
 import { User } from "../models/index.js";
-<<<<<<< HEAD
 import * as e from "../constants/index.js";
-=======
 import { toMilliseconds } from "../utils/parse-time-to-milliseconds.js";
->>>>>>> 10d18a4 (create: first files)
 
 async function findUserMongoDB(_obj) {
   return await User.findOne({ ..._obj });
