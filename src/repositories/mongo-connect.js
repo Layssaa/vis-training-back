@@ -1,5 +1,9 @@
 import { User } from "../models/index.js";
+<<<<<<< HEAD
+import * as e from "../constants/index.js";
+=======
 import { toMilliseconds } from "../utils/parse-time-to-milliseconds.js";
+>>>>>>> 10d18a4 (create: first files)
 
 async function findUserMongoDB(_obj) {
   return await User.findOne({ ..._obj });
@@ -16,51 +20,19 @@ async function updateDataMongoDB(_type, _findId, _obj) {
       date: new Date(),
     };
 
-    let userFind;
-    if (_type === "running") {
-      userFind = await User.findOneAndUpdate(
-        { _id: _findId },
-        {
-          $push: {
-            "modalities.running.records": obj,
-          },
-          $set: {
-            "modalities.running.name": _type,
-          },
+    const userFind = await User.findOneAndUpdate(
+      { _id: _findId },
+      {
+        $push: {
+          [`modalities.${_type}.records`]: obj,
         },
-        { returnDocument: "after" }
-      );
-    }
+        $set: {
+          [`modalities.${_type}.name`]: _type,
+        },
+      },
+      { returnDocument: "after" }
+    );
 
-    if (_type === "cycling") {
-      userFind = await User.findOneAndUpdate(
-        { _id: _findId },
-        {
-          $push: {
-            "modalities.cycling.records": obj,
-          },
-          $set: {
-            "modalities.cycling.name": _type,
-          },
-        },
-        { returnDocument: "after" }
-      );
-    }
-
-    if (_type === "walking") {
-      userFind = await User.findOneAndUpdate(
-        { _id: _findId },
-        {
-          $push: {
-            "modalities.walking.records": obj,
-          },
-          $set: {
-            "modalities.walking.name": _type,
-          },
-        },
-        { returnDocument: "after" }
-      );
-    }
     userFind.updated_At = new Date();
     await userFind.save();
 
@@ -98,6 +70,145 @@ async function findByDate({ from, to, modality, id }) {
   }
 }
 
+async function updateUserDataMongoDB({ updates, id }) {
+  try {
+    const updated = await User.findOneAndUpdate(
+      { _id: id },
+      { ...updates },
+      { returnDocument: "after" }
+    );
+
+    return { updated };
+  } catch (error) {
+    return { error };
+  }
+}
+
+async function getConquestsUser({ id }) {
+  const result = {
+    running: {
+      distance: [],
+      speed: [],
+      elevation_gain: [],
+    },
+    walking: {
+      distance: [],
+      speed: [],
+      elevation_gain: [],
+    },
+    cycling: {
+      distance: [],
+      speed: [],
+      elevation_gain: [],
+    },
+  };
+
+  try {
+    const { modalities } = await User.findById({ _id: id });
+    const { running, walking, cycling } = modalities;
+
+    // =======================================
+    // - ORDERING FROM GREATEST TO SMALLEST -
+    // =======================================
+
+    // // --------------- CYCLING CATEGORY ---------------
+    if (cycling) {
+      console.log("Have cycling");
+      const conquestCycling = cycling.records;
+
+      const betterDistance = (
+        await sortBetterPositions(conquestCycling, "distance")
+      )[0];
+
+      const betterSpeed = (
+        await sortBetterPositions(conquestCycling, "speed")
+      )[0];
+      const betterElevation = (
+        await sortBetterPositions(conquestCycling, "elevation_gain")
+      )[0];
+
+      result.cycling.distance = betterDistance;
+      result.cycling.speed = betterSpeed;
+      result.cycling.elevation_gain = betterElevation;
+    }
+
+    // //  --------------- WALKING CATEGORY ---------------
+    if (walking) {
+      console.log("Have walking");
+      const conquestWalking = walking.records;
+
+      const betterDistance = (
+        await sortBetterPositions(conquestWalking, "distance")
+      )[0];
+      const betterSpeed = (
+        await sortBetterPositions(conquestWalking, "speed")
+      )[0];
+      const betterElevation = (
+        await sortBetterPositions(conquestWalking, "elevation_gain")
+      )[0];
+
+      result.walking.distance = betterDistance;
+      result.walking.speed = betterSpeed;
+      result.walking.elevation_gain = betterElevation;
+    }
+
+    // //  ---------------  RUNNING CATEGORY ---------------
+    if (running) {
+      console.log("Have running");
+      const conquestRunning = running.records;
+
+      const betterDistance = (
+        await sortBetterPositions(conquestRunning, "distance")
+      )[0];
+      const betterSpeed = (
+        await sortBetterPositions(conquestRunning, "speed")
+      )[0];
+      const betterElevation = (
+        await sortBetterPositions(conquestRunning, "elevation_gain")
+      )[0];
+
+      result.running.distance = betterDistance;
+      result.running.speed = betterSpeed;
+      result.running.elevation_gain = betterElevation;
+    }
+
+    return { result };
+  } catch (error) {
+    return {
+      error: e.responseMessages.unable_to_access_this_months_achievements,
+    };
+  }
+}
+
+export {
+  findUserMongoDB,
+  insertUserMongoDB,
+  updateDataMongoDB,
+  findByDate,
+  updateUserDataMongoDB,
+  getConquestsUser,
+};
+
+function toMilliseconds(_time) {
+  return new Date(_time);
+}
+
+async function sortBetterPositions(_array, _category) {
+  const oneMonth = toMilliseconds(2628000000);
+  const today = toMilliseconds(new Date());
+  const after = today - oneMonth;
+
+  // ------- FILTERING WORKOUTS FROM THE LAST MONTH -------
+  return await _array
+    .filter((router) => {
+      if (toMilliseconds(router.date) >= after) {
+        return router;
+      }
+    })
+    .sort((training1, training2) =>
+      training1[`${_category}`] >= training2[`${_category}`] ? -1 : 1
+    );
+}
 async function getEvolutionMongoDB({ modality, id }) {
   try {
     const dateNow = new Date().toISOString();
@@ -117,8 +228,8 @@ async function getEvolutionMongoDB({ modality, id }) {
       })
       .slice(0, 4);
 
-    for (let i = 0; i <= result.lenght - 1 ; i++) {
-      console.log('_______ inside FOR ______');
+    for (let i = 0; i <= result.lenght - 1; i++) {
+      console.log("_______ inside FOR ______");
       result[i].evolutionTime = countPorcent(
         result[i + 1].time,
         result[i].time
@@ -139,16 +250,16 @@ async function getEvolutionMongoDB({ modality, id }) {
   } catch (error) {
     return error;
   }
-
-
 }
 
-function averageMonth(_arrayToCalc){
-  
-}
+function averageMonth(_arrayToCalc) {}
 
 function countPorcent(_from, _to) {
   return ((_to - _from) * 100) / _from;
+}
+
+function toMilliseconds(_time) {
+  return new Date(_time);
 }
 
 export {
@@ -156,5 +267,6 @@ export {
   insertUserMongoDB,
   updateDataMongoDB,
   findByDate,
+  updateUserDataMongoDB,
   getEvolutionMongoDB,
 };

@@ -1,7 +1,9 @@
 import { findUserMongoDB } from "../repositories/mongo-connect.js";
-import { getDataRedis } from "../repositories/redis-connect.js";
+import {
+  deleteSessionRedis,
+  getDataRedis,
+} from "../repositories/redis-connect.js";
 import { encryptData, authenticateUser } from "../utils/auth.js";
-import { authenticJWT } from "../utils/auth-jwt.js";
 
 async function resetPasswordUseCase({
   token,
@@ -10,16 +12,9 @@ async function resetPasswordUseCase({
 }) {
   try {
     // --------------- GET SESSION ON REDIS -----------------
-    const { id } = await getDataRedis(`session:reset-password:${token}`);
-    if (!id) throw new Error("Expired token");
 
     if (repeat_password !== redefined_password)
       throw new Error("The passwords are different");
-
-    // ---------------- AUTHENTIC JWT TOKEN -----------------
-    const { auth } = await authenticJWT(token);
-
-    if (!auth) throw new Error("Invalid token.");
 
     // --------------- GET USER ON MONGO -----------------
     const user = await findUserMongoDB({ id });
@@ -38,6 +33,8 @@ async function resetPasswordUseCase({
     user.updated_At = new Date().toString();
     await user.save();
 
+    await deleteSessionRedis(`session:reset-password:${token}`);
+
     return { data: "Updated password." };
   } catch (error) {
     console.log(error);
@@ -45,4 +42,17 @@ async function resetPasswordUseCase({
   }
 }
 
-export { resetPasswordUseCase };
+async function verifyTokenUseCase(token) {
+  try {
+    // --------------- GET SESSION ON REDIS -----------------
+    const { id } = await getDataRedis(`session:reset-password:${token}`);
+
+    if (!id) throw new Error("Expired token");
+
+    return { data: "sucess" };
+  } catch (error) {
+    return { error };
+  }
+}
+
+export { resetPasswordUseCase, verifyTokenUseCase };
